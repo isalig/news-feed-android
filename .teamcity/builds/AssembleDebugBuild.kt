@@ -20,7 +20,6 @@ class AssembleDebugBuild : BuildType({
 
     triggers {
         vcs {
-            branchFilter = "+:refs/heads/master"
         }
     }
 
