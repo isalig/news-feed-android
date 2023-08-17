@@ -1,6 +1,18 @@
+import jetbrains.buildServer.configs.kotlin.project
 import jetbrains.buildServer.configs.kotlin.version
-import projects.NewsFeedProject
+import projects.MainProject
+import projects.PullRequestProject
 
 version = "2023.05"
 
-NewsFeedProject()
+project {
+
+    vcsRoot {
+
+    }
+
+    subProjects(
+        PullRequestProject(),
+        MainProject()
+    )
+}
