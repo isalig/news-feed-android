@@ -14,6 +14,7 @@ class AssembleDebugBuild : BuildType({
     steps {
         gradle {
             tasks = "clean :app:buildDebug"
+            gradleWrapperPath = ""
         }
     }
 
