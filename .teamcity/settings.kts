@@ -1,19 +1,14 @@
 import jetbrains.buildServer.configs.kotlin.project
 import jetbrains.buildServer.configs.kotlin.version
-
-//import projects.MainProject
-//import projects.PullRequestProject
+import projects.MainProject
+import projects.PullRequestProject
 
 version = "2023.05"
 
 project {
 
-//    vcsRoot {
-//
-//    }
-
-//    subProjects(
-//        PullRequestProject(),
-//        MainProject()
-//    )
+    subProjects(
+        PullRequestProject(),
+        MainProject()
+    )
 }
