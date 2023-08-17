@@ -1,3 +1,4 @@
+import jetbrains.buildServer.configs.kotlin.DslContext
 import jetbrains.buildServer.configs.kotlin.project
 import jetbrains.buildServer.configs.kotlin.version
 import projects.MainProject
@@ -7,9 +8,7 @@ version = "2023.05"
 
 project {
 
-    vcsRoot {
-
-    }
+    vcsRoot(DslContext.settingsRoot)
 
     subProjects(
         PullRequestProject(),
