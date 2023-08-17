@@ -1,6 +1,7 @@
 package builds
 
 import jetbrains.buildServer.configs.kotlin.BuildType
+import jetbrains.buildServer.configs.kotlin.DslContext
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.buildSteps.gradle
@@ -21,6 +22,10 @@ class AssembleDebugBuild : BuildType({
     triggers {
         vcs {
         }
+    }
+
+    vcs {
+        root(DslContext.settingsRoot)
     }
 
     features {
