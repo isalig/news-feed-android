@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "io.aiico.newsfeed"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "io.aiico.newsfeed"
