@@ -1,19 +1,19 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "io.aiico.newsfeed"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "io.aiico.newsfeed"
         minSdk = 28
-        targetSdk = 33
-        versionCode = 2
-        versionName = "1.0.1"
+        targetSdk = 35
+        versionCode = 3
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
