@@ -1,4 +1,0 @@
-package builds
-
-class RunUnitTestsBuild {
-}
