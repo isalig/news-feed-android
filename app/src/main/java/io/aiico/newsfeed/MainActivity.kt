@@ -1,7 +1,6 @@
 package io.aiico.newsfeed
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,10 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,6 +20,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.aiico.newsfeed.ui.theme.MyApplicationTheme
 import io.aiico.newsfeed.ui.theme.Typography
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.get
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
 
 val headlines = listOf(
   ArticleHeadline(
@@ -67,21 +73,46 @@ val headlines = listOf(
 )
 
 class MainActivity : ComponentActivity() {
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    val episodes: List<Episode> = runBlocking {
+      HttpClient(Android) {
+        install(ContentNegotiation) {
+          json(Json {
+            ignoreUnknownKeys = true
+          })
+        }
+      }
+        .use { client ->
+          val response: Response = client.get("https://rickandmortyapi.com/api/episode").body()
+          response.results
+        }
+    }
     enableEdgeToEdge()
     setContent {
       MyApplicationTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-          Feed(
-            headlines,
-            modifier = Modifier.padding(innerPadding),
-            onClick = {
-              Toast.makeText(this, "Article clicked", Toast.LENGTH_SHORT).show()
-            }
-          )
+          Episodes(episodes = episodes, modifier = Modifier.padding(innerPadding))
+
+//          Feed(
+//            headlines,
+//            modifier = Modifier.padding(innerPadding),
+//            onClick = {
+//              Toast.makeText(this, "Article clicked", Toast.LENGTH_SHORT).show()
+//            }
+//          )
         }
       }
+    }
+  }
+}
+
+@Composable
+fun Episodes(episodes: List<Episode>, modifier: Modifier) {
+  LazyColumn(modifier = modifier) {
+    items(episodes) { episode ->
+      Text(text = episode.name)
     }
   }
 }
